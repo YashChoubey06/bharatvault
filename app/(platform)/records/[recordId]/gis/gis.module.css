@@ -1,0 +1,693 @@
+.page {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 24px 28px 60px;
+}
+
+.state {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--color-text-secondary);
+}
+
+.state button {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border-radius: 8px;
+  padding: 9px 13px;
+  cursor: pointer;
+}
+
+/* =========================================
+   BACK
+========================================= */
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  padding: 0;
+  margin-bottom: 24px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.backButton:hover {
+  color: var(--color-text-primary);
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.breadcrumb {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.titleRow h1 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+}
+
+.parcelBadge {
+  padding: 5px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+}
+
+.header p {
+  margin: 7px 0 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+/* =========================================
+   SPATIAL STATUS
+========================================= */
+
+.spatialStatus {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 215px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-surface);
+}
+
+.spatialStatus strong {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+}
+
+.spatialStatus span {
+  display: block;
+  margin-top: 3px;
+  font-size: 9px;
+  color: var(--color-text-muted);
+}
+
+.spatialStatusWarning {
+  color: var(--color-warning);
+}
+
+.spatialStatusSuccess {
+  color: var(--color-success);
+}
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.summaryCard {
+  padding: 17px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: var(--color-surface);
+}
+
+.summaryIcon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  background: var(--color-surface-secondary);
+  color: var(--color-text-secondary);
+}
+
+.summaryCard > span {
+  display: block;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+}
+
+.summaryCard > strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 20px;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+}
+
+.summaryCard > small {
+  display: block;
+  margin-top: 7px;
+  font-size: 9px;
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.card {
+  margin-bottom: 18px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cardHeader h2 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--color-text-primary);
+}
+
+.cardHeader p {
+  margin: 5px 0 0;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.cardHeader > svg {
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   AREA COMPARISON
+========================================= */
+
+.areaComparison {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  padding: 20px 2px;
+}
+
+.areaSource {
+  flex: 1;
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: var(--color-surface-secondary);
+}
+
+.areaIcon,
+.areaIconWarning {
+  width: 29px;
+  height: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 11px;
+  border-radius: 7px;
+  background: var(--color-surface);
+}
+
+.areaIcon {
+  color: var(--color-success);
+}
+
+.areaIconWarning {
+  color: var(--color-warning);
+}
+
+.areaSource > span {
+  display: block;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+}
+
+.areaSource > strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 21px;
+  color: var(--color-text-primary);
+}
+
+.areaSource > small {
+  display: block;
+  margin-top: 5px;
+  font-size: 9px;
+  color: var(--color-text-muted);
+}
+
+.comparisonArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  color: var(--color-text-muted);
+  font-size: 18px;
+}
+
+/* =========================================
+   NOTICES
+========================================= */
+
+.conflictNotice,
+.successNotice {
+  display: flex;
+  gap: 11px;
+  padding: 13px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-secondary);
+}
+
+.noticeIcon {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  color: var(--color-warning);
+  background: var(--color-surface);
+}
+
+.successNotice {
+  color: var(--color-success);
+}
+
+.conflictNotice strong,
+.successNotice strong {
+  display: block;
+  font-size: 11px;
+  color: var(--color-text-primary);
+}
+
+.conflictNotice p,
+.successNotice p {
+  margin: 4px 0 0;
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.conflictNotice p strong {
+  display: inline;
+}
+
+/* =========================================
+   MAIN GRID
+========================================= */
+
+.mainGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(300px, 0.8fr);
+  gap: 18px;
+}
+
+.mapCard {
+  min-width: 0;
+}
+
+.iconButton {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.iconButton:hover {
+  color: var(--color-text-primary);
+}
+
+/* =========================================
+   MAP
+========================================= */
+
+.mapContainer {
+  position: relative;
+  height: 430px;
+  margin-top: 16px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: var(--color-surface-secondary);
+}
+
+.mapGrid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background-image:
+    linear-gradient(
+      to right,
+      var(--color-border) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      var(--color-border) 1px,
+      transparent 1px
+    );
+  background-size: 35px 35px;
+}
+
+.mapLabel {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}
+
+.mapEmpty {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--color-text-muted);
+}
+
+.mapEmpty strong {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.mapEmpty span {
+  max-width: 270px;
+  text-align: center;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.polygonSvg {
+  position: absolute;
+  inset: 70px 80px;
+  width: calc(100% - 160px);
+  height: calc(100% - 140px);
+  z-index: 2;
+  overflow: visible;
+}
+
+.polygon {
+  fill: currentColor;
+  color: var(--color-text-secondary);
+  opacity: 0.15;
+  stroke: currentColor;
+  stroke-width: 0.7;
+  vector-effect: non-scaling-stroke;
+}
+
+.polygonCenter {
+  fill: currentColor;
+  color: var(--color-text-primary);
+}
+
+.mapControls {
+  position: absolute;
+  right: 13px;
+  top: 13px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.mapControls button {
+  width: 29px;
+  height: 29px;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.mapControls button:last-child {
+  border-bottom: 0;
+}
+
+.mapControls button:hover {
+  color: var(--color-text-primary);
+}
+
+.mapAttribution {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  z-index: 4;
+  font-size: 8px;
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   METADATA
+========================================= */
+
+.metadataList {
+  padding-top: 4px;
+}
+
+.metadataItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 13px 2px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.metadataItem:last-child {
+  border-bottom: 0;
+}
+
+.metadataItem span {
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+.metadataItem strong {
+  max-width: 210px;
+  text-align: right;
+  font-size: 10px;
+  color: var(--color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+/* =========================================
+   COORDINATES
+========================================= */
+
+.tableWrapper {
+  overflow-x: auto;
+  margin-top: 16px;
+}
+
+.coordinateTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.coordinateTable th,
+.coordinateTable td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  font-size: 10px;
+}
+
+.coordinateTable th {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  background: var(--color-surface-secondary);
+}
+
+.coordinateTable td {
+  color: var(--color-text-secondary);
+}
+
+.coordinateTable td:first-child {
+  width: 60px;
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   INTERPRETATION
+========================================= */
+
+.interpretation {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+}
+
+.interpretation > svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.interpretation strong {
+  display: block;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+}
+
+.interpretation p {
+  max-width: 950px;
+  margin: 4px 0 0;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty {
+  padding: 35px 10px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1050px) {
+  .summaryGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 750px) {
+  .page {
+    padding: 18px 15px 45px;
+  }
+
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .spatialStatus {
+    width: 100%;
+  }
+
+  .areaComparison {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .comparisonArrow {
+    width: auto;
+    height: 18px;
+    transform: rotate(90deg);
+    align-self: center;
+  }
+
+  .mapContainer {
+    height: 350px;
+  }
+
+  .metadataItem {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .metadataItem strong {
+    max-width: 100%;
+    text-align: left;
+  }
+}
+
+@media (max-width: 450px) {
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .mapContainer {
+    height: 300px;
+  }
+
+  .polygonSvg {
+    inset: 60px 40px;
+    width: calc(100% - 80px);
+    height: calc(100% - 120px);
+  }
+}

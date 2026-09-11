@@ -1,0 +1,670 @@
+.page {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 24px 28px 60px;
+}
+
+.state {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--color-text-secondary);
+}
+
+.state button {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border-radius: 8px;
+  padding: 9px 13px;
+  cursor: pointer;
+}
+
+/* =========================================
+   BACK
+========================================= */
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  padding: 0;
+  margin-bottom: 24px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.backButton:hover {
+  color: var(--color-text-primary);
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.breadcrumb {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.titleRow h1 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+}
+
+.parcelBadge {
+  padding: 5px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+}
+
+.header p {
+  margin: 7px 0 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.currentOwner {
+  min-width: 210px;
+  padding: 15px 17px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: var(--color-surface);
+}
+
+.currentOwner span {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.currentOwner strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 15px;
+  color: var(--color-text-primary);
+}
+
+.currentOwner small {
+  display: block;
+  margin-top: 3px;
+  font-size: 9px;
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.summaryCard {
+  padding: 17px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: var(--color-surface);
+}
+
+.summaryIcon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  background: var(--color-surface-secondary);
+  color: var(--color-text-secondary);
+}
+
+.summaryCard > span {
+  display: block;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+}
+
+.summaryCard > strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--color-text-primary);
+}
+
+.summaryCard > small {
+  display: block;
+  margin-top: 7px;
+  font-size: 9px;
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   CURRENT POSITION
+========================================= */
+
+.positionCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: var(--color-surface);
+}
+
+.positionIcon {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: var(--color-surface-secondary);
+  color: var(--color-success);
+}
+
+.positionContent {
+  flex: 1;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+}
+
+.positionContent h2 {
+  margin: 3px 0;
+  font-size: 15px;
+  color: var(--color-text-primary);
+}
+
+.positionContent p {
+  margin: 0;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+}
+
+.positionDate {
+  text-align: right;
+}
+
+.positionDate span {
+  display: block;
+  font-size: 9px;
+  color: var(--color-text-muted);
+}
+
+.positionDate strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--color-text-primary);
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.card {
+  margin-bottom: 18px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cardHeader h2 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--color-text-primary);
+}
+
+.cardHeader p {
+  margin: 5px 0 0;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.cardHeader > svg {
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   TIMELINE
+========================================= */
+
+.timeline {
+  padding-top: 18px;
+}
+
+.timelineEvent {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  min-height: 145px;
+}
+
+.timelineRail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.timelineDot {
+  position: relative;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+}
+
+.dotownership {
+  color: var(--color-success);
+}
+
+.dottransaction {
+  color: var(--color-warning);
+}
+
+.dotmutation {
+  color: var(--color-text-secondary);
+}
+
+.dotdocument {
+  color: var(--color-text-muted);
+}
+
+.timelineLine {
+  position: absolute;
+  top: 34px;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-border);
+}
+
+.eventContent {
+  margin-left: 8px;
+  padding: 0 0 28px 18px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.timelineEvent:last-child .eventContent {
+  border-bottom: 0;
+}
+
+.eventTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.eventDate {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.eventTop h3 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-primary);
+}
+
+.eventDescription {
+  max-width: 850px;
+  margin: 7px 0 12px;
+  font-size: 11px;
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+}
+
+.latestEvent .eventTop h3 {
+  font-weight: 750;
+}
+
+/* =========================================
+   CATEGORY BADGE
+========================================= */
+
+.categoryBadge {
+  flex-shrink: 0;
+  padding: 4px 7px;
+  border-radius: 5px;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: var(--color-surface-secondary);
+  color: var(--color-text-secondary);
+}
+
+.categoryownership {
+  color: var(--color-success);
+}
+
+.categorytransaction {
+  color: var(--color-warning);
+}
+
+.categorymutation {
+  color: var(--color-text-secondary);
+}
+
+.categorydocument {
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   OWNER TRANSFER
+========================================= */
+
+.ownerTransfer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 700px;
+  margin-bottom: 11px;
+}
+
+.ownerBox {
+  min-width: 170px;
+  padding: 9px 11px;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  background: var(--color-surface-secondary);
+}
+
+.ownerBox span {
+  display: block;
+  font-size: 8px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ownerBox strong {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--color-text-primary);
+}
+
+.transferArrow {
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   EVENT META
+========================================= */
+
+.eventMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.eventMeta span {
+  font-size: 9px;
+  color: var(--color-text-muted);
+}
+
+.eventMeta strong {
+  margin-left: 3px;
+  color: var(--color-text-secondary);
+}
+
+.documentLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: var(--color-text-secondary);
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.documentLink:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+/* =========================================
+   OWNERSHIP FLOW
+========================================= */
+
+.flow {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  padding: 24px 4px 8px;
+}
+
+.flowItem {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.flowNode {
+  position: relative;
+  min-width: 145px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 13px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: var(--color-surface-secondary);
+  color: var(--color-text-secondary);
+}
+
+.flowNode strong {
+  font-size: 11px;
+  color: var(--color-text-primary);
+}
+
+.flowNode span {
+  position: absolute;
+  top: -7px;
+  right: 8px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  font-size: 7px;
+  font-weight: 800;
+  color: var(--color-success);
+  text-transform: uppercase;
+}
+
+.flowArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   NOTE
+========================================= */
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+}
+
+.note > svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.note strong {
+  display: block;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+}
+
+.note p {
+  max-width: 950px;
+  margin: 4px 0 0;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty {
+  padding: 35px 10px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+  .summaryGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .page {
+    padding: 18px 15px 45px;
+  }
+
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .currentOwner {
+    width: 100%;
+  }
+
+  .positionCard {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .positionDate {
+    width: 100%;
+    text-align: left;
+    padding-left: 54px;
+  }
+
+  .eventTop {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .ownerTransfer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ownerBox {
+    width: 100%;
+  }
+
+  .transferArrow {
+    transform: rotate(90deg);
+    align-self: center;
+  }
+}
+
+@media (max-width: 450px) {
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .timelineEvent {
+    grid-template-columns: 35px 1fr;
+  }
+
+  .eventContent {
+    padding-left: 12px;
+  }
+
+  .timelineDot {
+    width: 28px;
+    height: 28px;
+  }
+
+  .timelineLine {
+    top: 30px;
+  }
+}

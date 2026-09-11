@@ -1,0 +1,859 @@
+.page {
+  padding: 28px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+.backLink:hover {
+  color: var(--color-primary);
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.titleIcon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.titleRow h1 {
+  margin: 0 0 5px;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+}
+
+.titleRow p {
+  margin: 0;
+  max-width: 700px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.demoBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Summary */
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.summaryCard {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  padding: 17px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.summaryIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.summaryCard span,
+.summaryCard small {
+  display: block;
+}
+
+.summaryCard span {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-bottom: 3px;
+}
+
+.summaryCard strong {
+  display: block;
+  font-size: 22px;
+  line-height: 1.2;
+  margin-bottom: 3px;
+}
+
+.summaryCard small {
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+/* Workspace */
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.graphPanel,
+.detailsPanel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.panelHeader {
+  min-height: 74px;
+  padding: 17px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.panelHeader h2 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.panelHeader p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 11px;
+  justify-content: flex-end;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+}
+
+.legendDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.parcelLegend {
+  color: var(--color-primary);
+}
+
+.ownerLegend {
+  color: #2563eb;
+}
+
+.documentLegend {
+  color: #7c3aed;
+}
+
+.transactionLegend {
+  color: #059669;
+}
+
+.validationLegend {
+  color: #d97706;
+}
+
+/* Graph */
+
+.graphCanvas {
+  position: relative;
+  height: 600px;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.025) 1px,
+      transparent 1px
+    );
+  background-size: 28px 28px;
+}
+
+.graphInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Edges */
+
+.edge {
+  position: absolute;
+  height: 1px;
+  transform-origin: left center;
+  background: var(--color-border-strong, #cbd5e1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.edge span {
+  position: absolute;
+  left: 50%;
+  top: -15px;
+  transform: translateX(-50%);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  padding: 2px 5px;
+  font-size: 8px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* Nodes */
+
+.graphNode {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 108px;
+  max-width: 150px;
+  padding: 10px 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: var(--color-surface);
+  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  z-index: 3;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+
+.graphNode:hover {
+  transform: translate(-50%, -50%) scale(1.04);
+  box-shadow: 0 9px 25px rgba(15, 23, 42, 0.12);
+}
+
+.selectedNode {
+  border-color: var(--color-primary);
+  box-shadow:
+    0 0 0 3px var(--color-primary-soft),
+    0 9px 25px rgba(15, 23, 42, 0.12);
+}
+
+.nodeIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nodeLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+  line-height: 1.25;
+}
+
+.nodeSubLabel {
+  font-size: 9px;
+  color: var(--color-text-muted);
+  text-align: center;
+  line-height: 1.25;
+}
+
+/* Node types */
+
+.node_parcel {
+  min-width: 132px;
+  border-color: var(--color-primary);
+}
+
+.node_parcel .nodeIcon {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.node_owner .nodeIcon {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.node_document .nodeIcon {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+
+.node_transaction .nodeIcon {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.node_mutation .nodeIcon {
+  background: #f0fdfa;
+  color: #0f766e;
+}
+
+.node_gis .nodeIcon {
+  background: #ecfeff;
+  color: #0891b2;
+}
+
+.node_court .nodeIcon {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.node_evidence .nodeIcon {
+  background: #fffbeb;
+  color: #d97706;
+}
+
+/* Details */
+
+.detailsPanel {
+  min-height: 674px;
+}
+
+.graphOverview,
+.nodeDetails {
+  height: 100%;
+}
+
+.graphOverview {
+  padding: 25px;
+}
+
+.overviewIcon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 6px;
+}
+
+.graphOverview h2 {
+  margin: 0 0 9px;
+  font-size: 20px;
+}
+
+.graphOverview > p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.parcelIdentity {
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 10px;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+}
+
+.parcelIdentity span,
+.parcelIdentity small {
+  display: block;
+}
+
+.parcelIdentity span {
+  color: var(--color-text-muted);
+  font-size: 10px;
+  margin-bottom: 5px;
+}
+
+.parcelIdentity strong {
+  display: block;
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.parcelIdentity small {
+  color: var(--color-text-secondary);
+  font-size: 11px;
+}
+
+.instruction {
+  margin-top: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 12px;
+  border-radius: 9px;
+  background: var(--color-primary-soft);
+  color: var(--color-text-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.instruction svg {
+  flex-shrink: 0;
+  color: var(--color-primary);
+  margin-top: 1px;
+}
+
+.graphStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.graphStats div {
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+}
+
+.graphStats strong {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+
+.graphStats span {
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+/* Node Details */
+
+.nodeDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.detailsHeader {
+  padding: 17px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.detailsTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detailsIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detailsTitle span {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 9px;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detailsTitle h3 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.closeButton {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  background: var(--color-background);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.detailsBody {
+  padding: 17px;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.detailRow span {
+  color: var(--color-text-muted);
+  font-size: 10px;
+}
+
+.detailRow strong {
+  text-align: right;
+  max-width: 60%;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.descriptionBlock {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.descriptionBlock span {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 10px;
+  margin-bottom: 6px;
+}
+
+.descriptionBlock p {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.connectionBox {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 17px;
+  padding: 12px;
+  border-radius: 9px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.connectionBox div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.connectionBox strong {
+  font-size: 10px;
+}
+
+.connectionBox span {
+  color: var(--color-text-secondary);
+  font-size: 10px;
+}
+
+/* Relationships */
+
+.relationshipSection {
+  margin-top: 20px;
+  padding: 22px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+}
+
+.sectionHeader {
+  margin-bottom: 17px;
+}
+
+.sectionHeader h2 {
+  margin: 0 0 5px;
+  font-size: 18px;
+}
+
+.sectionHeader p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.relationshipGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 11px;
+}
+
+.relationshipCard {
+  display: flex;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-background);
+}
+
+.relationshipIcon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.relationshipCard > div:last-child {
+  min-width: 0;
+}
+
+.relationshipCard span {
+  font-size: 9px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.06em;
+}
+
+.relationshipCard h3 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 4px 0 5px;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.relationshipCard p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* Interpretation */
+
+.interpretation {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: var(--color-background);
+}
+
+.interpretationIcon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.interpretation h3 {
+  margin: 0 0 4px;
+  font-size: 12px;
+}
+
+.interpretation p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* Loading / Empty */
+
+.loadingState,
+.emptyState {
+  min-height: 65vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+}
+
+.loadingState p {
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.loadingSpinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.emptyState h2 {
+  margin: 12px 0 5px;
+  color: var(--color-text);
+  font-size: 18px;
+}
+
+.emptyState p {
+  margin: 0 0 18px;
+  font-size: 12px;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 1200px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .detailsPanel {
+    min-height: auto;
+  }
+
+  .graphOverview {
+    min-height: 300px;
+  }
+
+  .relationshipGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .summaryGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .panelHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .legend {
+    justify-content: flex-start;
+  }
+
+  .graphCanvas {
+    height: 540px;
+  }
+}
+
+@media (max-width: 650px) {
+  .page {
+    padding: 17px;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .titleRow h1 {
+    font-size: 23px;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .graphCanvas {
+    height: 500px;
+    overflow-x: auto;
+  }
+
+  .graphInner {
+    min-width: 700px;
+  }
+
+  .relationshipGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .relationshipSection {
+    padding: 17px;
+  }
+}

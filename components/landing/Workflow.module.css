@@ -1,0 +1,150 @@
+.section {
+  padding: 110px 0;
+  background: var(--color-background);
+}
+
+.container {
+  width: min(100% - 40px, var(--max-width));
+  margin: 0 auto;
+}
+
+.heading {
+  max-width: 700px;
+}
+
+.eyebrow {
+  margin-bottom: 14px;
+
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: 0.1em;
+}
+
+.heading h2 {
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.heading h2 span {
+  color: var(--color-primary);
+}
+
+.heading p {
+  margin-top: 17px;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  color: var(--color-text-secondary);
+}
+
+.workflow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+  margin-top: 65px;
+}
+
+.step {
+  position: relative;
+  padding-right: 25px;
+}
+
+.stepNumber {
+  margin-bottom: 14px;
+
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+}
+
+.icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #dbe5f5;
+  border-radius: 11px;
+
+  background: white;
+  color: var(--color-primary);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.step h3 {
+  margin-top: 18px;
+
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.step p {
+  max-width: 180px;
+
+  margin-top: 8px;
+
+  font-size: 11px;
+  line-height: 1.6;
+
+  color: var(--color-text-secondary);
+}
+
+.connector {
+  position: absolute;
+
+  top: 80px;
+  right: 10px;
+
+  width: calc(100% - 65px);
+  height: 1px;
+
+  background: #cbd5e1;
+  transform: translateX(50%);
+}
+
+@media (max-width: 1000px) {
+  .workflow {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 42px 20px;
+  }
+
+  .connector {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 80px 0;
+  }
+
+  .container {
+    width: min(100% - 28px, var(--max-width));
+  }
+
+  .workflow {
+    grid-template-columns: 1fr;
+    margin-top: 45px;
+  }
+
+  .step {
+    padding-right: 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .step:last-child {
+    border-bottom: none;
+  }
+
+  .step p {
+    max-width: 100%;
+  }
+}

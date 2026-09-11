@@ -1,0 +1,618 @@
+.page {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 28px 30px 40px;
+}
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin-bottom: 7px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.pageHeader h1 {
+  margin: 0;
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--color-text-primary);
+}
+
+.pageHeader p {
+  margin: 7px 0 0;
+  max-width: 650px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.headerMeta {
+  display: flex;
+  align-items: center;
+}
+
+.recordCount {
+  min-width: 110px;
+  padding: 10px 13px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: white;
+}
+
+.recordCount span {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 9px;
+  color: #64748b;
+}
+
+.recordCount strong {
+  font-size: 18px;
+  color: var(--color-text-primary);
+}
+
+/* =========================================
+   FILTER CARD
+========================================= */
+
+.filterCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: white;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 320px;
+  flex: 1;
+  height: 38px;
+  padding: 0 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  color: #64748b;
+}
+
+.searchBox:focus-within {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.07);
+}
+
+.searchBox input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.searchBox input::placeholder {
+  color: #94a3b8;
+}
+
+.clearSearch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 23px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: #f1f5f9;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filterItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 9px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  color: #64748b;
+}
+
+.filterItem select {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #475569;
+  font-family: inherit;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.clearFilters {
+  height: 38px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* =========================================
+   RESULTS BAR
+========================================= */
+
+.resultsBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 2px 10px;
+  font-size: 10px;
+  color: #64748b;
+}
+
+.resultsBar strong {
+  color: #334155;
+}
+
+.resultsHint {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #64748b;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.tableCard {
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: white;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tableWrapper table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+}
+
+.tableWrapper thead {
+  background: #f8fafc;
+}
+
+.tableWrapper th {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--color-border);
+  color: #64748b;
+  font-size: 9px;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tableWrapper td {
+  padding: 13px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.tableWrapper tbody tr {
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+
+.tableWrapper tbody tr:hover {
+  background: #f8fafc;
+}
+
+.tableWrapper tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* =========================================
+   PARCEL CELL
+========================================= */
+
+.parcelCell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.parcelCell strong {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e40af;
+}
+
+.parcelCell span {
+  font-size: 9px;
+  color: #64748b;
+}
+
+/* =========================================
+   LOCATION
+========================================= */
+
+.locationCell {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.locationCell > svg {
+  flex: 0 0 auto;
+  color: #64748b;
+}
+
+.locationCell div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.locationCell strong {
+  font-size: 10px;
+  color: #334155;
+}
+
+.locationCell span {
+  font-size: 9px;
+  color: #94a3b8;
+}
+
+/* =========================================
+   OWNER
+========================================= */
+
+.ownerCell {
+  min-width: 120px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* =========================================
+   AREA
+========================================= */
+
+.areaCell {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.areaCell strong {
+  font-size: 11px;
+  color: #334155;
+}
+
+.areaCell span {
+  font-size: 9px;
+  color: #94a3b8;
+}
+
+/* =========================================
+   HEALTH
+========================================= */
+
+.health {
+  width: 90px;
+}
+
+.healthTop {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-bottom: 5px;
+}
+
+.healthTop span {
+  font-size: 10px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.healthTop small {
+  font-size: 8px;
+  color: #94a3b8;
+}
+
+.healthBar {
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #e2e8f0;
+}
+
+.healthFill {
+  height: 100%;
+  border-radius: inherit;
+  background: #64748b;
+}
+
+/* =========================================
+   RISK
+========================================= */
+
+.riskBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 7px;
+  border-radius: 5px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.riskLOW {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.riskMEDIUM {
+  background: #fffbeb;
+  color: #a16207;
+}
+
+.riskHIGH {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.riskCRITICAL {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.riskUNKNOWN {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 7px;
+  border-radius: 5px;
+  font-size: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.statusVERIFIED {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.statusREVIEW_REQUIRED {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.statusPROCESSING {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+/* =========================================
+   VIEW BUTTON
+========================================= */
+
+.viewButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  background: white;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.viewButton:hover {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+/* =========================================
+   STATES
+========================================= */
+
+.stateCard,
+.emptyCard,
+.errorCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: white;
+}
+
+.stateCard {
+  gap: 9px;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+.errorCard {
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 24px;
+  color: #b91c1c;
+}
+
+.errorCard > svg {
+  flex: 0 0 auto;
+}
+
+.errorCard strong {
+  display: block;
+  font-size: 12px;
+}
+
+.errorCard p {
+  margin: 4px 0 0;
+  font-size: 10px;
+  color: #7f1d1d;
+}
+
+.emptyCard {
+  flex-direction: column;
+  padding: 30px;
+  text-align: center;
+  color: #64748b;
+}
+
+.emptyCard > svg {
+  margin-bottom: 10px;
+}
+
+.emptyCard h3 {
+  margin: 0;
+  font-size: 13px;
+  color: #334155;
+}
+
+.emptyCard p {
+  margin: 6px 0 14px;
+  font-size: 10px;
+}
+
+.emptyCard button {
+  padding: 7px 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: white;
+  color: #2563eb;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+/* =========================================
+   ANIMATION
+========================================= */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+  .filterCard {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .searchBox {
+    min-width: 0;
+  }
+
+  .filters {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 700px) {
+  .page {
+    padding: 20px 14px 30px;
+  }
+
+  .pageHeader {
+    flex-direction: column;
+  }
+
+  .headerMeta {
+    width: 100%;
+  }
+
+  .recordCount {
+    width: 100%;
+  }
+
+  .resultsBar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .filters {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .filterItem {
+    width: 100%;
+  }
+
+  .filterItem select {
+    width: 100%;
+  }
+
+  .clearFilters {
+    align-self: flex-start;
+  }
+}
