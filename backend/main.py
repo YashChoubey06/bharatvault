@@ -37,9 +37,10 @@ async def local_security(request, call_next):
     if request.method not in ('GET', 'HEAD', 'OPTIONS'):
         origin = request.headers.get('origin')
         allowed = os.getenv('BHARAT_ALLOWED_ORIGINS', 'http://localhost:3003,http://127.0.0.1:3003').split(',')
-        if origin and origin not in allowed:
+        is_allowed_origin = (not origin) or ('*' in allowed) or (origin in allowed) or origin.endswith('.vercel.app')
+        if not is_allowed_origin:
             return JSONResponse({'detail':'Origin is not allowed.'}, status_code=403)
-        if request.headers.get('sec-fetch-site') == 'cross-site':
+        if request.headers.get('sec-fetch-site') == 'cross-site' and not is_allowed_origin:
             return JSONResponse({'detail':'Cross-site requests are not allowed.'}, status_code=403)
     response = await call_next(request)
     response.headers['Cache-Control'] = 'no-store'
