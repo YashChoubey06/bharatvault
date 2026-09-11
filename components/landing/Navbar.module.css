@@ -1,12 +1,16 @@
 .navbar {
+  --nav-ink: #102a43;
+  --nav-blue: #1b4d89;
   position: sticky;
   top: 0;
   z-index: 100;
   width: 100%;
-  background: rgba(255, 255, 255, 0.94);
-  border-bottom: 1px solid var(--color-border);
-  backdrop-filter: blur(14px);
+  background: #ffffff;
+  border-bottom: 2px solid #102a43;
 }
+
+.skipLink { position: fixed; top: 8px; left: 8px; z-index: 200; padding: 9px 12px; background: #102a43; color: #fff; transform: translateY(-150%); }
+.skipLink:focus { transform: translateY(0); outline: 3px solid #f2b84b; }
 
 .inner {
   width: min(100% - 40px, var(--max-width));
@@ -34,8 +38,8 @@
   align-items: center;
   justify-content: center;
 
-  border-radius: 10px;
-  background: var(--color-primary);
+  border-radius: 3px;
+  background: var(--nav-blue);
   color: white;
 }
 
@@ -49,12 +53,12 @@
   font-size: 15px;
   font-weight: 750;
   letter-spacing: -0.01em;
-  color: var(--color-text);
+  color: var(--nav-ink);
 }
 
 .brandTagline {
   margin-top: 4px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--color-text-muted);
   letter-spacing: 0.02em;
@@ -76,8 +80,10 @@
 }
 
 .navLink:hover {
-  color: var(--color-primary);
+  color: var(--nav-blue);
 }
+
+.navLink:focus-visible { outline: 3px solid #f2b84b; outline-offset: 5px; }
 
 .desktopActions {
   display: flex;
@@ -95,7 +101,7 @@
   justify-content: center;
   gap: 7px;
 
-  border-radius: var(--radius-md);
+  border-radius: 3px;
 
   font-size: 13px;
   font-weight: 650;
@@ -119,17 +125,19 @@
 }
 
 .primaryButton {
-  border: 1px solid var(--color-primary);
-  background: var(--color-primary);
+  border: 1px solid var(--nav-blue);
+  background: var(--nav-blue);
   color: white;
   box-shadow: var(--shadow-sm);
 }
 
 .primaryButton:hover {
-  background: var(--color-primary-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  background: var(--nav-ink);
 }
+
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible,
+.menuButton:focus-visible { outline: 3px solid #f2b84b; outline-offset: 3px; }
 
 .menuButton {
   display: none;
@@ -141,7 +149,7 @@
   justify-content: center;
 
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: 3px;
 
   background: white;
   color: var(--color-text);

@@ -6,7 +6,6 @@ import {
   ShieldCheck,
   Menu,
   X,
-  ArrowRight,
 } from "lucide-react";
 
 import styles from "./Navbar.module.css";
@@ -20,6 +19,7 @@ export default function Navbar() {
 
   return (
     <header className={styles.navbar}>
+      <a className={styles.skipLink} href="#main-story">Skip to main story</a>
       <div className={styles.inner}>
         {/* Brand */}
         <Link href="/" className={styles.brand} onClick={closeMenu}>
@@ -37,16 +37,16 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className={styles.desktopNav}>
-          <Link href="/how-it-works" className={styles.navLink}>
+          <Link href="/#why" className={styles.navLink}>
+            Why it matters
+          </Link>
+
+          <Link href="/#how-it-works" className={styles.navLink}>
             How It Works
           </Link>
 
-          <Link href="/technology" className={styles.navLink}>
-            Technology
-          </Link>
-
-          <Link href="/security" className={styles.navLink}>
-            Security
+          <Link href="/#proof" className={styles.navLink}>
+            Who it serves
           </Link>
         </nav>
 
@@ -58,7 +58,6 @@ export default function Navbar() {
 
           <Link href="/dashboard" className={styles.primaryButton}>
             Open Platform
-            <ArrowRight size={16} />
           </Link>
         </div>
 
@@ -79,27 +78,27 @@ export default function Navbar() {
         <div className={styles.mobileMenu}>
           <nav className={styles.mobileNav}>
             <Link
-              href="/how-it-works"
+              href="/#why"
               className={styles.mobileNavLink}
               onClick={closeMenu}
             >
-              How It Works
+              Why it matters
             </Link>
 
             <Link
-              href="/technology"
+              href="/#how-it-works"
               className={styles.mobileNavLink}
               onClick={closeMenu}
             >
-              Technology
+              How it works
             </Link>
 
             <Link
-              href="/security"
+              href="/#proof"
               className={styles.mobileNavLink}
               onClick={closeMenu}
             >
-              Security
+              Who it serves
             </Link>
           </nav>
 
@@ -118,7 +117,6 @@ export default function Navbar() {
               onClick={closeMenu}
             >
               Open Platform
-              <ArrowRight size={16} />
             </Link>
           </div>
         </div>

@@ -1,0 +1,44 @@
+.card {
+  position: relative;
+  min-height: 230px;
+  padding: 25px 24px 20px 42px;
+  overflow: hidden;
+  border: 1px solid #c9c1b0;
+  border-radius: 3px 10px 10px 3px;
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 31px, rgba(27, 77, 137, .075) 31px 32px),
+    var(--landing-paper, #f7f2e8);
+  color: var(--landing-ink, #102a43);
+  box-shadow: 3px 4px 0 #102a43, 12px 15px 26px rgba(16, 42, 67, .12);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 5px -5px -5px 5px;
+  z-index: -1;
+  border: 1px solid #d9d0be;
+  background: #efe9dc;
+}
+
+.marginRule { position: absolute; top: 0; bottom: 0; left: 25px; width: 1px; background: rgba(180, 35, 24, .34); }
+.cardHead { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: var(--landing-blue, #1b4d89); }
+.marker { font-family: "Segoe UI", Arial, sans-serif; font-size: .75rem; font-weight: 700; color: #56677a; }
+.card h3 { max-width: 22ch; margin: 30px 0 0; font-family: Georgia, "Times New Roman", serif; font-size: 1.4rem; line-height: 1.2; }
+.value { display: block; margin-top: 12px; font-family: "Segoe UI", Arial, sans-serif; font-size: 1.65rem; line-height: 1.1; }
+.card p { max-width: 38ch; margin-top: 12px; font-size: 1rem; line-height: 1.65; color: #41566d; }
+.card footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-top: 28px; padding-top: 12px; border-top: 1px solid rgba(16, 42, 67, .18); font-size: .8rem; color: #52667a; }
+.stamp { flex: 0 0 auto; padding: 4px 7px; border: 1px solid currentColor; border-radius: 2px; font-size: .75rem; font-weight: 800; text-transform: uppercase; transform: rotate(-2deg); }
+.verified { color: var(--landing-teal, #0f766e); }
+.review { color: var(--landing-amber, #b45309); }
+.conflict { color: var(--landing-red, #b42318); }
+.neutral { color: var(--landing-blue, #1b4d89); }
+.interactive { display: block; cursor: pointer; transition: transform 160ms ease, box-shadow 160ms ease; }
+.interactive:hover { transform: translate(-2px, -2px); box-shadow: 5px 6px 0 #102a43, 15px 18px 30px rgba(16, 42, 67, .14); }
+.interactive:active { transform: translate(2px, 2px); box-shadow: 1px 2px 0 #102a43, 7px 9px 18px rgba(16, 42, 67, .12); }
+.interactive:focus-visible { outline: 3px solid #f2b84b; outline-offset: 5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive { transition: none; }
+  .interactive:hover { transform: none; }
+}
