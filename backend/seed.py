@@ -6,11 +6,11 @@ from .intelligence import reconcile
 
 
 def seed():
-    password = os.getenv('BHARAT_BOOTSTRAP_PASSWORD', '')
+    password = os.getenv('BHARAT_BOOTSTRAP_PASSWORD', 'BharatVault-Local-2026')
     with db.transaction() as con:
         if not con.execute('SELECT 1 FROM users LIMIT 1').fetchone():
             if len(password) < 10:
-                raise RuntimeError('Set BHARAT_BOOTSTRAP_PASSWORD (at least 10 characters) in backend/.env before first start.')
+                raise RuntimeError('Set BHARAT_BOOTSTRAP_PASSWORD (at least 10 characters) in environment variables before first start.')
             for index, name, email, role in [(1, 'Rajesh Sharma', 'officer', 'verification_officer'), (2, 'Anita Verma', 'operator', 'digitization_operator'), (3, 'System Administrator', 'admin', 'system_admin')]:
                 user = dict(id=f'USR-00{index}', name=name, email=email+'@bharatvault.gov', role=role, district='Kota')
                 con.execute('INSERT INTO users VALUES(?,?,?,?)', (user['id'], user['email'], hash_password(password), db.encode(user)))
