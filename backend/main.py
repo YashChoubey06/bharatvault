@@ -49,6 +49,8 @@ async def local_security(request, call_next):
 
 def parcel_for(con, key, user):
     parcel=auth.require_parcel(user, db.get(con, 'parcel', key))
+    if parcel.get('archivedAt'):
+        raise HTTPException(404, 'Parcel not found.')
     # Transaction panels use actual extracted sources, not fabricated fixture values.
     extracted=db.fields(con,key)
     for kind,fragment,mapping in [('registration','registration',{'area':'area','buyer':'buyer','seller':'seller','registration_number':'registrationNumber','registration_date':'registrationDate'}),('mutation','mutation',{'mutation_status':'status','mutation_number':'mutationNumber','mutation_date':'mutationDate','owner_name':'newOwner'})]:
@@ -61,12 +63,12 @@ def parcel_for(con, key, user):
 
 
 def visible(con, user):
-    return [p for p in db.all_entities(con, 'parcel') if user['role']=='system_admin' or p['village']['district']==user.get('district')]
+    return [p for p in db.all_entities(con, 'parcel') if not p.get('archivedAt') and (user['role']=='system_admin' or p['village']['district']==user.get('district'))]
 
 
 def doc_for(con, key, user):
     doc = db.document(con, key)
-    if not doc:
+    if not doc or doc.get('archivedAt'):
         raise HTTPException(404, 'Document not found.')
     parcel_for(con, doc['parcelId'], user)
     return doc
@@ -156,6 +158,44 @@ def create_parcel(body: ParcelInput,user=User):
         reconcile(con,p['id'])
         db.audit(con,user['id'],'PARCEL_CREATED',p['id'],'Parcel context entered manually; not source-verified.',body.model_dump())
         return db.get(con,'parcel',p['id'])
+
+
+@api.delete('/parcels/{key}')
+def archive_parcel(key: str,user=User):
+    auth.require_role(user,auth.UPLOADERS)
+    with db.transaction() as con:
+        p=parcel_for(con,key,user)
+        if db.documents(con,key):
+            raise HTTPException(409,'Remove the parcel documents first, then remove the parcel.')
+        p.update(archivedAt=db.now(),archivedBy=user['id'])
+        db.put(con,'parcel',p)
+        db.audit(con,user['id'],'PARCEL_ARCHIVED',key,'Parcel removed from active registry; audit history retained.')
+        return {'ok':True,'id':key}
+
+
+class GISInput(BaseModel):
+    area: float = Field(gt=0)
+    source: str = Field(min_length=1,max_length=200)
+    coordinates: list[list[float]] = Field(min_length=3,max_length=200)
+    crs: str = Field(default='EPSG:4326',min_length=1,max_length=50)
+
+
+@api.put('/parcels/{key}/gis')
+def save_gis(key: str,body: GISInput,user=User):
+    auth.require_role(user,auth.UPLOADERS)
+    if any(len(point)!=2 for point in body.coordinates):
+        raise HTTPException(422,'Each GIS coordinate must contain longitude and latitude.')
+    coordinates=body.coordinates
+    if coordinates[0] != coordinates[-1]:
+        coordinates=coordinates+[coordinates[0]]
+    with db.transaction() as con:
+        p=parcel_for(con,key,user)
+        gis=dict(id=p.get('gis',{}).get('id') or db.uid('GIS'),surveyNumber=p['surveyNumber'],area=body.area,source=body.source.strip(),crs=body.crs.strip(),geometry={'type':'Polygon','coordinates':[coordinates]},updatedAt=db.now(),enteredBy=user['id'],sample=False)
+        p['gis']=gis
+        db.put(con,'parcel',p)
+        reconcile(con,key)
+        db.audit(con,user['id'],'GIS_RECORD_SAVED',key,'Locally entered GIS evidence saved; no external GIS verification claimed.',{'gisId':gis['id'],'area':gis['area'],'source':gis['source']})
+        return gis
 
 
 @api.get('/parcels/{key}')
@@ -267,6 +307,20 @@ def retry(key: str,user=User):
         if doc['ocrStatus']!='FAILED':
             raise HTTPException(409,'Only failed jobs may be retried. Upload a new source version to replace completed evidence.')
         return processing.enqueue(con,doc,user['id'])
+
+
+@api.delete('/documents/{key}')
+def archive_document(key: str,user=User):
+    auth.require_role(user,auth.UPLOADERS)
+    with db.transaction() as con:
+        doc=doc_for(con,key,user)
+        if doc.get('ocrStatus') in ('QUEUED','PROCESSING'):
+            raise HTTPException(409,'Wait for local OCR to finish before removing this document.')
+        doc.update(archivedAt=db.now(),archivedBy=user['id'],status='ARCHIVED')
+        db.save_document(con,doc)
+        reconcile(con,doc['parcelId'])
+        db.audit(con,user['id'],'DOCUMENT_ARCHIVED',doc['parcelId'],'Document removed from active parcel evidence; original file and audit history retained.',{'documentId':key,'sha256':doc['sha256']})
+        return {'ok':True,'id':key,'parcelId':doc['parcelId']}
 
 
 class FieldReview(BaseModel):
@@ -433,9 +487,23 @@ def assistant(body: Question,user=User):
     terms={'owner':['owner_name','buyer'],'buyer':['buyer'],'area':['area','gis_area'],'survey':['survey_number'],'khasra':['survey_number'],'mutation':['mutation_status','mutation_number'],'khata':['khata_number'],'village':['village'],'district':['district']}
     keys={field for term,fields in terms.items() if term in body.question.casefold() for field in fields}
     with db.transaction() as con:
-        parcel_for(con,body.parcelId,user)
+        parcel=parcel_for(con,body.parcelId,user)
         sources=[f for f in evidence(con,body.parcelId) if f['field'] in keys]
-        answer='\n'.join(f"{f['field'].replace('_',' ').title()}: {f['value']} — {f['source']}, page {f['page']} ({f['reviewStatus']})." for f in sources)
+        context_values={
+            'owner_name': parcel.get('currentRecordedOwner'),
+            'area': parcel.get('recordedArea'),
+            'survey_number': parcel.get('surveyNumber'),
+            'khata_number': parcel.get('khataNumber'),
+            'village': parcel.get('village',{}).get('name'),
+            'district': parcel.get('village',{}).get('district'),
+        }
+        for field,value in context_values.items():
+            if field in keys and value not in (None,''):
+                sources.append(dict(id=f"CTX-{body.parcelId}-{field}",parcelId=body.parcelId,field=field,value=(f'{value} ha' if field=='area' else str(value)),sourceType='PARCEL_CONTEXT',documentName='Parcel registry context',page=None,reviewStatus='CONTEXT'))
+        if 'gis_area' in keys and parcel.get('gis',{}).get('area') is not None:
+            gis=parcel['gis']
+            sources.append(dict(id=gis['id'],parcelId=body.parcelId,field='gis_area',value=f"{gis['area']} ha",sourceType='GIS',documentName=gis.get('source','GIS record'),page=None,reviewStatus='SYNTHETIC_SAMPLE' if gis.get('sample') else 'LOCAL_SOURCE'))
+        answer='\n'.join(f"{f['field'].replace('_',' ').title()}: {f['value']} — {f.get('source') or f.get('documentName')}" + (f", page {f['page']}" if f.get('page') else '') + f" ({f.get('reviewStatus','AVAILABLE')})." for f in sources)
         if not answer: answer='No supporting extracted evidence was found for this question. Ask about an owner, area, survey/khasra, khata, mutation, village, or district. This local MVP does not infer missing facts or determine legal ownership.'
         return dict(id=db.uid('ANS'),parcelId=body.parcelId,question=body.question,answer=answer,sources=sources,generatedAt=db.now(),mode='local-evidence-retrieval')
 

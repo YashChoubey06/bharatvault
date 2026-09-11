@@ -80,9 +80,10 @@ def document(con, key):
     return json.loads(row['data']) if row else None
 
 
-def documents(con, parcel_id=None):
+def documents(con, parcel_id=None, include_archived=False):
     sql, args = ('SELECT data FROM documents ORDER BY rowid DESC', ()) if parcel_id is None else ('SELECT data FROM documents WHERE parcel_id=? ORDER BY rowid DESC', (parcel_id,))
-    return [json.loads(r['data']) for r in con.execute(sql, args)]
+    items = [json.loads(r['data']) for r in con.execute(sql, args)]
+    return items if include_archived else [item for item in items if not item.get('archivedAt')]
 
 
 def save_document(con, doc):
@@ -94,7 +95,9 @@ def fields(con, parcel_id=None, document_id=None):
         rows = con.execute('SELECT data FROM fields WHERE document_id=? ORDER BY rowid', (document_id,))
     else:
         rows = con.execute('SELECT data FROM fields WHERE parcel_id=? ORDER BY rowid', (parcel_id,))
-    return [json.loads(r['data']) for r in rows]
+    items = [json.loads(r['data']) for r in rows]
+    active_document_ids = {item['id'] for item in documents(con)}
+    return [item for item in items if item['documentId'] in active_document_ids]
 
 
 def save_field(con, field):

@@ -129,6 +129,39 @@
   color: var(--color-success);
 }
 
+.headerActions { display: flex; align-items: center; gap: 9px; }
+
+.editButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 11px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.editButton:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.formError { margin-bottom: 14px; padding: 11px 13px; border: 1px solid #fecaca; border-radius: 8px; background: #fef2f2; color: #991b1b; font-size: 11px; }
+.editorCard { margin-bottom: 18px; }
+.gisForm { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 18px; }
+.gisForm label { display: grid; gap: 6px; font-size: 10px; font-weight: 700; color: var(--color-text-secondary); }
+.gisForm input,
+.gisForm textarea { width: 100%; padding: 10px 11px; border: 1px solid var(--color-border); border-radius: 7px; background: var(--color-background); color: var(--color-text-primary); font: inherit; }
+.gisForm input:focus,
+.gisForm textarea:focus { outline: 2px solid color-mix(in srgb, var(--color-primary) 25%, transparent); border-color: var(--color-primary); }
+.coordinateInput { grid-column: 1 / -1; }
+.coordinateInput textarea { resize: vertical; font-family: monospace; line-height: 1.6; }
+.coordinateInput small { font-weight: 400; color: var(--color-text-muted); }
+.formActions { grid-column: 1 / -1; display: flex; justify-content: flex-end; }
+.formActions button { padding: 9px 13px; border: 1px solid var(--color-primary); border-radius: 8px; background: var(--color-primary); color: #fff; font-size: 11px; font-weight: 700; cursor: pointer; }
+.formActions button:disabled { opacity: .6; cursor: wait; }
+
 /* =========================================
    SUMMARY
 ========================================= */
@@ -449,18 +482,20 @@
 }
 
 .polygon {
-  fill: currentColor;
-  color: var(--color-text-secondary);
-  opacity: 0.15;
-  stroke: currentColor;
-  stroke-width: 0.7;
+  fill: rgba(13, 148, 136, 0.16);
+  stroke: #0f766e;
+  stroke-width: 1.8;
   vector-effect: non-scaling-stroke;
 }
 
 .polygonCenter {
-  fill: currentColor;
-  color: var(--color-text-primary);
+  fill: #0f766e;
+  stroke: white;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
 }
+
+.polygonLabel { fill: #0f5f59; font-size: 3.2px; font-weight: 800; letter-spacing: .08em; }
 
 .mapControls {
   position: absolute;
@@ -647,6 +682,9 @@
   .spatialStatus {
     width: 100%;
   }
+
+  .headerActions { width: 100%; align-items: stretch; flex-direction: column; }
+  .gisForm { grid-template-columns: 1fr; }
 
   .areaComparison {
     align-items: stretch;

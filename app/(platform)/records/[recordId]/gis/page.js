@@ -15,9 +15,10 @@ import {
   Ruler,
   CalendarDays,
   Info,
+  Pencil,
 } from "lucide-react";
 
-import { getParcelById } from "@/services/api/parcels";
+import { getParcelById, saveParcelGIS } from "@/services/api/parcels";
 
 import styles from "./gis.module.css";
 
@@ -30,6 +31,26 @@ export default function ParcelGISPage() {
   const [parcel, setParcel] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  async function saveGIS(event) {
+    event.preventDefault();
+    setSaving(true);
+    setError("");
+    const form = new FormData(event.currentTarget);
+    try {
+      const coordinates = String(form.get("coordinates")).split(/\r?\n/).filter(Boolean).map(line => line.split(",").map(value => Number(value.trim())));
+      if (coordinates.length < 3 || coordinates.some(point => point.length !== 2 || point.some(value => !Number.isFinite(value)))) throw new Error("Enter at least three coordinate lines as longitude, latitude.");
+      await saveParcelGIS(recordId, {area:Number(form.get("area")),source:form.get("source"),crs:form.get("crs"),coordinates});
+      setParcel(await getParcelById(recordId));
+      setEditing(false);
+    } catch (err) {
+      setError(err.message || "Unable to save GIS information.");
+    } finally {
+      setSaving(false);
+    }
+  }
 
   useEffect(() => {
     async function loadGIS() {
@@ -97,15 +118,11 @@ export default function ParcelGISPage() {
     );
   }
 
-  if (error || !parcel || !parcel.gis) {
+  if (!parcel) {
     return (
       <div className={styles.state}>
         <AlertTriangle size={20} />
-
-        <span>
-          {error || "GIS information not available for this parcel."}
-        </span>
-
+        <span>{error || "Parcel information is unavailable."}</span>
         <button
           type="button"
           onClick={() => router.push(`/records/${recordId}`)}
@@ -114,6 +131,15 @@ export default function ParcelGISPage() {
         </button>
       </div>
     );
+  }
+
+  if (!parcel.gis) {
+    return <div className={styles.page}>
+      <button type="button" className={styles.backButton} onClick={() => router.push(`/records/${recordId}`)}><ArrowLeft size={15}/>Back to Record</button>
+      <header className={styles.header}><div><div className={styles.breadcrumb}>LAND RECORDS / PARCEL / GIS</div><div className={styles.titleRow}><h1>Add spatial evidence</h1><span className={styles.parcelBadge}>{parcel.id}</span></div><p>No GIS record is linked to this parcel yet.</p></div></header>
+      {error && <div className={styles.formError} role="alert">{error}</div>}
+      <GISForm parcel={parcel} onSubmit={saveGIS} saving={saving}/>
+    </div>;
   }
 
   const gis = parcel.gis;
@@ -166,8 +192,11 @@ export default function ParcelGISPage() {
           </p>
         </div>
 
-        <SpatialStatus conflict={hasAreaConflict} />
+        <div className={styles.headerActions}><SpatialStatus conflict={hasAreaConflict} /><button type="button" className={styles.editButton} onClick={() => setEditing(value => !value)}><Pencil size={14}/>{editing ? "Cancel edit" : "Edit GIS"}</button></div>
       </header>
+
+      {error && <div className={styles.formError} role="alert">{error}</div>}
+      {editing && <GISForm parcel={parcel} gis={gis} onSubmit={saveGIS} saving={saving}/>}
 
       {/* =========================================
           SPATIAL SUMMARY
@@ -329,7 +358,7 @@ export default function ParcelGISPage() {
 
             <div className={styles.mapLabel}>
               <Map size={15} />
-              Cadastral GIS
+              {gis.sample ? "Synthetic GIS preview" : "Cadastral GIS"}
             </div>
 
             {polygon ? (
@@ -634,6 +663,7 @@ function PolygonPreview({ polygon }) {
         r="1.6"
         className={styles.polygonCenter}
       />
+      <text x="50" y="46" textAnchor="middle" className={styles.polygonLabel}>PARCEL BOUNDARY</text>
     </svg>
   );
 }
@@ -670,8 +700,8 @@ function CoordinateTable({ polygon, gis }) {
           {coordinates.map((coordinate, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{coordinate[0]}</td>
-              <td>{coordinate[1]}</td>
+              <td>{Number(coordinate[0]).toFixed(6)}</td>
+              <td>{Number(coordinate[1]).toFixed(6)}</td>
             </tr>
           ))}
         </tbody>
@@ -782,4 +812,19 @@ function formatDate(value) {
     month: "short",
     year: "numeric",
   }).format(date);
+}
+
+function GISForm({parcel,gis,onSubmit,saving}) {
+  const coordinates = normalizeCoordinates(gis?.geometry?.coordinates || gis?.coordinates);
+  const fallback = [[75.80,25.18],[75.808,25.181],[75.807,25.187],[75.801,25.188],[75.80,25.18]];
+  return <section className={`${styles.card} ${styles.editorCard}`}>
+    <div className={styles.cardHeader}><div><h2>Local GIS record</h2><p>Enter spatial evidence supplied for survey {parcel.surveyNumber}. This does not call an external GIS service.</p></div><MapPin size={18}/></div>
+    <form className={styles.gisForm} onSubmit={onSubmit}>
+      <label>Calculated GIS area (hectares)<input name="area" type="number" min="0.0001" step="0.0001" defaultValue={gis?.area || parcel.recordedArea || ""} required/></label>
+      <label>Source / layer name<input name="source" defaultValue={gis?.source || "Local cadastral demo layer"} maxLength={200} required/></label>
+      <label>Coordinate system<input name="crs" defaultValue={gis?.crs || "EPSG:4326"} maxLength={50} required/></label>
+      <label className={styles.coordinateInput}>Polygon coordinates<textarea name="coordinates" rows={7} defaultValue={(coordinates.length ? coordinates : fallback).map(point => point.join(", ")).join("\n")} required/><small>One point per line: longitude, latitude. At least three points; the polygon closes automatically.</small></label>
+      <div className={styles.formActions}><button type="submit" disabled={saving}>{saving ? "Saving…" : "Save GIS record"}</button></div>
+    </form>
+  </section>;
 }

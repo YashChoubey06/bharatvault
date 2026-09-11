@@ -103,6 +103,35 @@ class LocalMVPTest(unittest.TestCase):
         self.assertIsNone(normalize('area','2 bigha'))
         self.assertEqual(normalize('mutation_date','17/08/2021'),'2021-08-17')
 
+    def test_parcel_gis_and_safe_archival(self):
+        self.login()
+        parcel_body={'surveyNumber':'DEMO/99','currentRecordedOwner':'Demo Owner','khataNumber':'DEMO-KH','village':'Rampura','tehsil':'Ladpura','district':'Kota','recordedArea':1.25}
+        parcel=self.client.post('/api/v1/parcels',json=parcel_body)
+        self.assertEqual(parcel.status_code,201,parcel.text)
+        parcel_id=parcel.json()['id']
+        gis_body={'area':1.22,'source':'Test cadastral layer','crs':'EPSG:4326','coordinates':[[75.8,25.18],[75.81,25.18],[75.81,25.19],[75.8,25.19]]}
+        gis=self.client.put(f'/api/v1/parcels/{parcel_id}/gis',json=gis_body)
+        self.assertEqual(gis.status_code,200,gis.text)
+        self.assertEqual(len(gis.json()['geometry']['coordinates'][0]),5)
+        assistant=self.client.post('/api/v1/assistant/query',json={'parcelId':parcel_id,'question':'What is the area?'})
+        self.assertEqual(assistant.status_code,200,assistant.text)
+        self.assertTrue(any(source['sourceType']=='GIS' for source in assistant.json()['sources']))
+        with (self.samples/'sample-ror-english.png').open('rb') as source:
+            upload=self.client.post('/api/v1/documents',data={'parcelId':parcel_id,'documentType':'Current RoR','language':'eng'},files={'file':('management-test.png',source,'image/png')})
+        self.assertEqual(upload.status_code,202,upload.text)
+        document_id=upload.json()['id']
+        for _ in range(120):
+            document=self.client.get('/api/v1/documents/'+document_id).json()
+            if document['ocrStatus'] not in ('QUEUED','PROCESSING'): break
+            time.sleep(.1)
+        self.assertEqual(self.client.delete(f'/api/v1/parcels/{parcel_id}').status_code,409)
+        removed=self.client.delete(f'/api/v1/documents/{document_id}')
+        self.assertEqual(removed.status_code,200,removed.text)
+        self.assertEqual(self.client.get(f'/api/v1/documents/{document_id}').status_code,404)
+        self.assertEqual(self.client.get(f'/api/v1/parcels/{parcel_id}/documents').json(),[])
+        self.assertEqual(self.client.delete(f'/api/v1/parcels/{parcel_id}').status_code,200)
+        self.assertEqual(self.client.get(f'/api/v1/parcels/{parcel_id}').status_code,404)
+
     def test_pdf_and_empty_states(self):
         from PIL import Image
         self.login()

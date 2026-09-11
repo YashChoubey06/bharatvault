@@ -5,3 +5,4 @@ export const getDocumentsByParcel = async id => (await api.get("/parcels/"+encod
 export const getDocumentExtractions = async id => (await api.get("/documents/"+encodeURIComponent(id)+"/extractions")).data;
 export const uploadDocument = async data => (await api.post("/documents",data,{headers:{"Content-Type":"multipart/form-data"}})).data;
 export const retryDocument = async id => (await api.post("/documents/"+encodeURIComponent(id)+"/process")).data;
+export const removeDocument = async id => (await api.delete("/documents/"+encodeURIComponent(id))).data;

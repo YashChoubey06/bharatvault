@@ -56,9 +56,7 @@ export default function AssistantPanel({ parcelId, onClose }) {
     setLoading(true);
 
     try {
-      const ask = askAssistantApi;
-
-      const response = await ask(parcelId, text);
+      const response = await askAssistantApi({ parcelId, question: text });
 
       const assistantMessage = {
         id: `assistant-${Date.now()}`,

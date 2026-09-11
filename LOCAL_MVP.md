@@ -12,6 +12,9 @@ The existing Next.js screens use a FastAPI backend, a persistent SQLite database
 - A persisted risk queue, officer decisions, database-backed dashboard/reports, hash-linked append-only audit and local JSON evidence exports.
 - Bounded local evidence retrieval with source links. This is not a general-purpose LLM and does not infer missing facts.
 - Existing Records, Evidence Viewer, Validation, Timeline, Graph and GIS navigation remains. Views show only available source data.
+- Parcel Registry now supports creating and safely removing parcels. A parcel can be removed after its active documents are removed.
+- Document removal is a soft archive: it disappears from active parcel evidence, while the original local file and append-only audit event remain retained.
+- Built-in sample parcels include explicitly synthetic GIS polygons. New parcels can add or edit locally supplied area, source, CRS and polygon coordinates from the GIS tab.
 
 ## Run on this configured computer
 Open PowerShell in the repository folder:
@@ -62,6 +65,16 @@ Synthetic PNG scans are in `backend/data/samples`. Generate them again with:
 6. Review all its fields, then decide CASE-PRC-003 in Verification. Approval is blocked while fields, processing, or material validation checks are unresolved.
 7. Reload/restart and confirm reviews, decisions and audit persist.
 8. Export the parcel's evidence bundle from its overview.
+
+## Parcel, document and GIS demo controls
+
+- Add a parcel: open **Parcels** in the sidebar, choose **Add Parcel**, enter the context, and submit. You are taken to its record page.
+- Add a document: open **Documents → Upload Document**, select the parcel, source type and language, then upload a supported scan.
+- Remove a document: open the document details page and choose **Remove**. Wait for OCR to finish first. This archives rather than erases the source.
+- Remove a parcel: open **Parcels** and use the trash button beside it. All active documents must be removed first.
+- Add GIS evidence: open a parcel’s **GIS** tab. Enter area, source/layer, CRS and one `longitude, latitude` point per line. Existing GIS records have an **Edit GIS** action.
+
+The sample polygons are demonstrative geometry only. For a real parcel, enter coordinates from an authorized cadastral/GIS source and name that source accurately.
 
 The scans and initial four parcels are explicitly synthetic. One English source and one field review may already be present from the browser acceptance test. Duplicate original uploads to a parcel return a clear conflict; use the existing source.
 

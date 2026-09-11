@@ -13,10 +13,10 @@ import {
   Database,
   ShieldCheck,
   ScanText,
+  Trash2,
 } from "lucide-react";
 
-import { getDocumentById } from "@/services/api/documents";
-import { retryDocument } from "@/services/api/documents";
+import { getDocumentById, retryDocument, removeDocument } from "@/services/api/documents";
 import Link from "next/link";
 import ManualFieldMapping from "@/components/records/ManualFieldMapping";
 import styles from "./document-detail.module.css";
@@ -144,6 +144,20 @@ export default function DocumentDetailPage() {
   const [document, setDocument] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  async function handleRemove() {
+    if (!window.confirm("Remove this document from the parcel? Its original file and audit history will be retained locally.")) return;
+    setDeleting(true);
+    setError("");
+    try {
+      const result = await removeDocument(documentId);
+      router.push(`/records/${result.parcelId}`);
+    } catch (err) {
+      setError(err.message || "Could not remove document.");
+      setDeleting(false);
+    }
+  }
 
   useEffect(() => {
     async function loadDocument() {
@@ -286,19 +300,13 @@ export default function DocumentDetailPage() {
           </div>
         </div>
 
-        <div
-          className={`${styles.status} ${
-            status.type === "success"
-              ? styles.statusSuccess
-              : status.type === "pending"
-              ? styles.statusPending
-              : status.type === "danger"
-              ? styles.statusDanger
-              : styles.statusNeutral
-          }`}
-        >
-          <StatusIcon size={15} />
-          {status.label}
+        <div className={styles.headerActions}>
+          <div className={`${styles.status} ${status.type === "success" ? styles.statusSuccess : status.type === "pending" ? styles.statusPending : status.type === "danger" ? styles.statusDanger : styles.statusNeutral}`}>
+            <StatusIcon size={15} />{status.label}
+          </div>
+          <button type="button" className={styles.dangerButton} onClick={handleRemove} disabled={deleting || ["QUEUED","PROCESSING"].includes(document.ocrStatus)} title={["QUEUED","PROCESSING"].includes(document.ocrStatus) ? "Wait for OCR to finish" : "Remove from parcel"}>
+            <Trash2 size={15}/>{deleting ? "Removing…" : "Remove"}
+          </button>
         </div>
       </header>
 

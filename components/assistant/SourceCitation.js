@@ -24,7 +24,8 @@ export default function SourceCitation({ source }) {
         </strong>
 
         <span>
-          {source.parcelId && source.id && <Link href={`/records/${encodeURIComponent(source.parcelId)}/evidence?field=${encodeURIComponent(source.id)}`}>View source evidence → </Link>}
+          {source.parcelId && source.documentId && <Link href={`/records/${encodeURIComponent(source.parcelId)}/evidence?field=${encodeURIComponent(source.id)}`}>View source evidence → </Link>}
+          {source.parcelId && source.sourceType === "GIS" && <Link href={`/records/${encodeURIComponent(source.parcelId)}/gis`}>View GIS evidence → </Link>}
           {source.field && `${source.field} · `}
           {source.page !== null &&
             source.page !== undefined &&
