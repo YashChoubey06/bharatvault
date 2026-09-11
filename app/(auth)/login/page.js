@@ -10,11 +10,17 @@ import {
   ArrowRight,
   Eye,
   EyeOff,
+  UserRoundCheck,
 } from "lucide-react";
 
 import { useAuth } from "@/context/AuthContext";
 
 import styles from "./page.module.css";
+
+const DEMO_CREDENTIALS = {
+  email: "officer@bharatvault.gov",
+  password: "BharatVault-Local-2026",
+};
 
 export default function LoginPage() {
   const router = useRouter();
@@ -30,6 +36,16 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const [error, setError] = useState("");
+
+  const [credentialsFilled, setCredentialsFilled] =
+    useState(false);
+
+  function fillDemoCredentials() {
+    setEmail(DEMO_CREDENTIALS.email);
+    setPassword(DEMO_CREDENTIALS.password);
+    setError("");
+    setCredentialsFilled(true);
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -173,12 +189,30 @@ export default function LoginPage() {
           </form>
 
           <div className={styles.demoNotice}>
-            <strong>Local MVP · Password required</strong>
+            <div className={styles.demoNoticeHeader}>
+              <div>
+                <strong>Local MVP demo account</strong>
 
-            <span>
-              Use your local bootstrap password. Documents and OCR stay on this computer.
-              Sample parcels are synthetic, not government records.
-            </span>
+                <span>
+                  Fill the demo username and password, then sign in.
+                </span>
+              </div>
+
+              <button
+                type="button"
+                className={styles.demoButton}
+                onClick={fillDemoCredentials}
+              >
+                <UserRoundCheck size={16} />
+                {credentialsFilled
+                  ? "Credentials filled"
+                  : "Fill demo credentials"}
+              </button>
+            </div>
+
+            <small>
+              Documents and OCR stay on this computer. Sample parcels are synthetic.
+            </small>
           </div>
         </section>
 
